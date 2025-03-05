@@ -17,7 +17,7 @@ for i in $(seq "${NUM_CLUSTERS}"); do
     kubectl --context="cluster${i}" label namespace istio-system topology.istio.io/network="network${i}"
 
    sed -e "s/{i}/${i}/" cluster.yaml > "cluster${i}.yaml"
-  istioctl install --force --context="cluster${i}" -f "cluster${i}.yaml"
+  istioctl install --force --context="cluster${i}" -f "cluster${i}.yaml" -y
 
   echo "Generate eastwest gateway in cluster${i}"
   samples/multicluster/gen-eastwest-gateway.sh \
