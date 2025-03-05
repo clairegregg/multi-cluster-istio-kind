@@ -41,7 +41,7 @@ function create_clusters() {
     image_arg="--image=kindest/node:${KIND_TAG}"
   fi
   for i in $(seq "${num_clusters}"); do
-    kind create cluster --config kind-config.yaml --name "${BASE_CLUSTER_NAME}${i}" "${image_arg}" 
+    kind create cluster --name "${BASE_CLUSTER_NAME}${i}" "${image_arg}" 
     fixup_cluster "${i}"
     echo
   done
