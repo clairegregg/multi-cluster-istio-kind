@@ -6,8 +6,9 @@ set -o nounset
 set -o pipefail
 
 NUM_CLUSTERS="${NUM_CLUSTERS:-2}"
+BASE_CLUSTER_NAME="${BASE_CLUSTER_NAME}"
 
 for i in $(seq "${NUM_CLUSTERS}"); do
-  kubectl config use-context "cluster${i}"
+  kubectl config use-context "${BASE_CLUSTER_NAME}${i}"
   helm uninstall istio --namespace istio-system
 done

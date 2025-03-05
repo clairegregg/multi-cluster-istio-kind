@@ -29,6 +29,7 @@ NUM_CLUSTERS="${NUM_CLUSTERS:-2}"
 KIND_IMAGE="${KIND_IMAGE:-}"
 KIND_TAG="${KIND_TAG:-v1.32.1}"
 OS="$(uname)"
+BASE_CLUSTER_NAME="${BASE_CLUSTER_NAME}"
 
 function create_clusters() {
   local num_clusters=${1}
@@ -40,7 +41,7 @@ function create_clusters() {
     image_arg="--image=kindest/node:${KIND_TAG}"
   fi
   for i in $(seq "${num_clusters}"); do
-    kind create cluster --config kind-config.yaml --name "cluster${i}" "${image_arg}" 
+    kind create cluster --config kind-config.yaml --name "${BASE_CLUSTER_NAME}${i}" "${image_arg}" 
     fixup_cluster "${i}"
     echo
   done
@@ -52,17 +53,17 @@ function fixup_cluster() {
   if [ "$OS" != "Darwin" ]; then
     # Set container IP address as kube API endpoint in order for clusters to reach kube API servers in other clusters.
     local docker_ip
-    docker_ip=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "cluster${i}-control-plane")
-    kubectl config set-cluster "kind-cluster${i}" --server="https://${docker_ip}:6443"
+    docker_ip=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "${BASE_CLUSTER_NAME}${i}-control-plane")
+    kubectl config set-cluster "kind-${BASE_CLUSTER_NAME}${i}" --server="https://${docker_ip}:6443"
   fi
 
   # Simplify context name
-  kubectl config rename-context "kind-cluster${i}" "cluster${i}"
+  kubectl config rename-context "kind-${BASE_CLUSTER_NAME}${i}" "${BASE_CLUSTER_NAME}${i}"
 }
 
 echo "Creating ${NUM_CLUSTERS} clusters"
 create_clusters "${NUM_CLUSTERS}"
-kubectl config use-context cluster1
+kubectl config use-context ${BASE_CLUSTER_NAME}1
 
 echo "Kind CIDR is $(docker network inspect -f '{{$map := index .IPAM.Config 0}}{{index $map "Subnet"}}' kind)"
 

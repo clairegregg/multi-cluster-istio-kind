@@ -5,7 +5,7 @@ spec:
     global:
       meshID: mesh1
       multiCluster:
-        clusterName: cluster1
+        clusterName: mdb-replica-1
       network: network1
 
 

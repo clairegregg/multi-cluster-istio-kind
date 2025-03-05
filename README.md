@@ -14,10 +14,21 @@ This repo contains the minimal configuration to deploy istio in multi-cluster(on
 
 ## Cluster Setup
 
+### Combined step
+
+```shell
+export NUM_CLUSTERS=2
+export BASE_CLUSTER_NAME=cluster
+```
+```shell
+./fast-setup.sh
+```
+
 ### Create kind cluster
 
 ```shell
 export NUM_CLUSTERS=2
+export BASE_CLUSTER_NAME=cluster
 cd kind-setup
 ./create-cluster.sh
 ```
