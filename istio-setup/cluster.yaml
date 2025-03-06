@@ -2,10 +2,6 @@ apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 spec:
   values:
-    meshConfig:
-      proxyMetadata:
-        ISTIO_META_DNS_CAPTURE: "true"
-        ISTIO_META_DNS_AUTO_ALLOCATE: "true"
     global:
       meshID: mesh1
       multiCluster:
