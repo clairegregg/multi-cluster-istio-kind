@@ -5,7 +5,7 @@ spec:
     global:
       meshID: mesh1
       multiCluster:
-        clusterName: cluster-1
-      network: network1
+        clusterName: cluster-4
+      network: network4
 
 

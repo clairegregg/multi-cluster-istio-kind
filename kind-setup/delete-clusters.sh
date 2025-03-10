@@ -21,7 +21,8 @@ set -o xtrace
 set -o errexit
 set -o nounset
 set -o pipefail
-
+export BASE_CLUSTER_NAME="cluster-"
+export NUM_CLUSTERS="4"
 NUM_CLUSTERS="${NUM_CLUSTERS:-2}"
 BASE_CLUSTER_NAME="${BASE_CLUSTER_NAME}"
 

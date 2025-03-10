@@ -1,3 +1,6 @@
+export BASE_CLUSTER_NAME="cluster-"
+export NUM_CLUSTERS="4"
+
 cd kind-setup
 ./create-cluster.sh
 ./install-metallb.sh
@@ -9,5 +12,5 @@ cd ../istio-setup
 cd ../istio-chart
 ./enable-endpoint-discovery.sh
 
-cd ../testing
-./deploy-application.sh
+# cd ../testing
+# ./deploy-application.sh
